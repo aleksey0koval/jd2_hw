@@ -20,15 +20,19 @@ public class TestClass {
 
     public static double average(List<Integer> list) {
         int summ = 0;
+        int count = 0;
         for (Integer s : list) {
-            summ += s;
+            if (s != null) {
+                summ += s;
+                count++;
+            }
         }
 
         if (list.isEmpty()) {
             System.out.println("Empty list!!!");
             return 0;
         } else {
-            return (double) summ / list.size();
+            return (double) summ / count;
         }
     }
 }
