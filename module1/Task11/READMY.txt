@@ -8,3 +8,6 @@ git init. Затем дабавить ресурсы для отслеживан
 После этого зафиксировать изменения в локольном репозитории командой git commint -m "aaaaa". После этого запушиваем
 изменения в удаленный репозиторий командой git push origin nameBranch. Если адрес удаленного репозитория неизвестен,
 то командой git remote add origin https://github.com/nameProf/nameReposit.git указываем его и затем его запушиваем.
+Создаем новую ветку newMaster командой git checkout -b newMaster и сразу переходим на нее. Производим изменения
+файле READMY.txt и проверяем статус командой git status и проверяем статус командой git status: в ветке newMaster
+modified: READMY.txt. aaa
