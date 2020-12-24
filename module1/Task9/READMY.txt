@@ -1,0 +1,62 @@
+Задание 9
+Соберите ваше веб приложение при помощи maven. Установите, переустановите,
+посмотрите статус сервера при помощи Tomcat maven plugin. Опишите проблемы,
+возникшие при использовании, и попробуйте их решить
+
+Для того, чтобы воспользоваться Tomcat maven plugin его необходимо прописать в настройках
+файла pom.xml:
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>tomcat-maven-plugin</artifactId>
+                <version>1.1</version>
+                <configuration>
+                    <url>http://localhost:8080/manager/text</url>
+                    <username>tomcat</username>
+                    <password>tomcat</password>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+После этого необходимо зайти в файл tomcat-users.xml и в тегах <tomcat-users> добавить
+следующие строки:
+     <tomcat-users>
+        <role rolename="manager-gui"/>
+        <role rolename="manager-script"/>
+        <role rolename="admin-gui"/>
+        <user username="tomcat" password="tomcat" roles="manager-gui,manager-script, admin-gui"/>
+     </tomcat-users>
+Для того чтобы установить приложение на сервер необходимо в командной строке написать команду
+(где лежит pom.xml) mvn tomcat:deploy либо в среде разрабоки в вкладке maven/plugins
+нажать на tomcat:deploy. Если все хорошо - должны получить сообщение
+           --- tomcat-maven-plugin:1.1:deploy (default-cli) @ Task9 ---
+           [INFO] Deploying war to http://localhost:8080/Task9
+           [INFO] OK - Приложение успешно развёрнуто в контекстном пути [/Task9]
+           [INFO] ------------------------------------------------------------------------
+           [INFO] BUILD SUCCESS
+Для того чтобы переустановить приложение на сервер необходимо в командной строке написать команду
+mvn tomcat:redeploy либо в среде разрабоки в вкладке maven/plugins нажать на tomcat:redeploy.
+Если все хорошо, то должны получить сообщение:
+            [INFO] --- tomcat-maven-plugin:1.1:redeploy (default-cli) @ Task9 ---
+            [INFO] Deploying war to http://localhost:8080/Task9
+            [INFO] OK - Приложение успешно развёрнуто в контекстном пути [/Task9]
+            [INFO] ------------------------------------------------------------------------
+            [INFO] BUILD SUCCESS
+Для того чтобы информацию необходимо в командной строке написать команду mvn tomcat:info
+либо в среде разрабоки в вкладке maven/plugins нажать на tomcat:info. Если все хорошо,
+то должны получить сообщение:
+            [INFO] --- tomcat-maven-plugin:1.1:info (default-cli) @ Task9 ---
+            [INFO] Listing server information at http://localhost:8080/manager/text
+            [INFO] OK - Server info
+            [INFO] Tomcat Version: [Apache Tomcat/9.0.41]
+            [INFO] OS Name: [Windows 10]
+            [INFO] OS Version: [10.0]
+            [INFO] OS Architecture: [amd64]
+            [INFO] JVM Version: [11+28]
+            [INFO] JVM Vendor: [Oracle Corporation]
+            [INFO] ------------------------------------------------------------------------
+            [INFO] BUILD SUCCESS
+
+
+
