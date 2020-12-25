@@ -1,0 +1,59 @@
+Задание 13 
+Внесите изменения в ваш веб проект, например, измените текст на jsp. Затем выполните откат изменений и проверьте статус выполнения операции
+
+Создаем веб проект. Добавляем отслеживание изменений гитом, добавляем файлы для отслеживания, и делаем комментарий следующими командами:
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/test (master)
+$ git status
+On branch master
+Your branch is ahead of 'origin/master' by 10 commits.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   test.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/test (master)
+$ git add .
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/test (master)
+$ git commit -m "C3"
+[master 8df0256] C3
+ 1 file changed, 1 insertion(+)
+
+Далее производим изменения файла расширением test.txt на test.jsp и делаем commit.
+user@DESKTOP-OGE1JLF MINGW64 /d/test/test (master)
+$ git add .
+ 
+user@DESKTOP-OGE1JLF MINGW64 /d/test/test (master)
+$ git commit -m "C5"
+[master f8b035c] C5
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+ rename test.txt => test.jsp (85%)
+
+Проверяем папку:
+user@DESKTOP-OGE1JLF MINGW64 /d/test/test (master)
+$ dir
+pom.xml  src  target  test.iml  test.jsp
+
+Далее делаем откат
+user@DESKTOP-OGE1JLF MINGW64 /d/test/test (master)
+$ git reset --hard HEAD^1
+HEAD is now at 8df0256 C3
+
+Проверяем статус:
+user@DESKTOP-OGE1JLF MINGW64 /d/test/test (master)
+$ git status
+On branch master
+Your branch is ahead of 'origin/master' by 11 commits.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+
+Проверяем папку:
+user@DESKTOP-OGE1JLF MINGW64 /d/test/test (master)
+$ dir
+pom.xml  src  target  test.iml  test.txt
