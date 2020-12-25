@@ -1,13 +1,101 @@
-Задание 11
-Скопируйте веб-проект в хранилище, созданное ранее. Затем скачайте (checkout)
-изменения в отдельный каталог. Попробуйте изменить что-либо в вашем проекте
-и посмотрите на статус папок в проводнике Windows.
+Задание 11 Скопируйте веб-проект в хранилище, созданное ранее. Затем скачайте (checkout) изменения в отдельный каталог. 
+Попробуйте изменить что-либо в вашем проекте и посмотрите на статус папок в проводнике Windows.
 
-Чтобы скопировать проект в хранилище нужно сначало эту папку с проектом указать гиту для отслеживания комнадой
-git init. Затем дабавить ресурсы для отслеживания командой git add <fileName> либо все при помощи "." git add .
-После этого зафиксировать изменения в локольном репозитории командой git commint -m "aaaaa". После этого запушиваем
-изменения в удаленный репозиторий командой git push origin nameBranch. Если адрес удаленного репозитория неизвестен,
-то командой git remote add origin https://github.com/nameProf/nameReposit.git указываем его и затем его запушиваем.
-Создаем новую ветку newMaster командой git checkout -b newMaster и сразу переходим на нее. Производим изменения
-файле READMY.txt и проверяем статус командой git status и проверяем статус командой git status: в ветке newMaster
-modified: READMY.txt. aaa
+Чтобы скопировать проект в хранилище нужно сначало эту папку с проектом указать гиту для отслеживания командой git init.
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Task11/test
+$ git init
+Initialized empty Git repository in D:/test/Task11/test.git/
+
+Затем добавляем ресурсы для отслеживания командой git add:
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Task11/test (master)
+$ git add .
+warning: LF will be replaced by CRLF in pom.xml.
+The file will have its original line endings in your working directory
+
+После этого зафиксировать изменения в локальном репозитории командой git commint –m:
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Task11/test (master)
+$ git commit -m "Commit 1"
+[master (root-commit) f0d8e75] Commit 1
+ 8 files changed, 530 insertions(+)
+
+После этого запушиваем изменения в удаленный репозиторий командой git push origin master:
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Task11/test (master)
+$ git push origin master
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (5/5), 704 bytes | 704.00 KiB/s, done.
+Total 5 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/aleksey0koval/test.git
+   ae49654..6a0bf99  master -> master
+
+Создаем новую ветку newMaster командой git checkout -b newMaster и сразу переходим на нее.
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Task11/test (master)
+$ git checkout -b newMaster
+Switched to a new branch 'newMaster'
+
+Делаем изменение в текстовом файле в ветке newMaster и закоментим
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Task11/test (newMaster)
+$ git add .
+warning: LF will be replaced by CRLF in task11.txt.
+The file will have its original line endings in your working directory
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Task11/test (newMaster)
+$ git commit -m "C2"
+[newMaster 41985e2] C2
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Task11/test (newMaster)
+$ cat task11.txt
+C1
+C2
+
+Переходим на ветку master и не видим сделанные изменения в ветке newMaster
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Task11/test (newMaster)
+$ git checkout master
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Task11/test (master)
+$ cat task11.txt
+C1
+
+По изменяем немного ветки и произведем слияние веток, где решим конфликт и сделаем еще один комит.
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Task11 (master)
+$ git merge newMaster
+Auto-merging task11.txt
+CONFLICT (content): Merge conflict in task11.txt
+Automatic merge failed; fix conflicts and then commit the result.
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Task11 (master|MERGING)
+$ cat task11.txt
+C1
+C2
+<<<<<<< HEAD
+C6
+=======
+C3
+C4
+C5
+>>>>>>> newMaster
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Task11/test (master|MERGING)
+$ vim task11.txt
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Task11/test (master|MERGING)
+$ git add .
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Task11/test (master|MERGING)
+$ git commit -m "C7"
+[master 975895c] C7
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Task11/test (master)
+$ cat task11.txt
+C1
+C2
+C6
+C3
+C4
+C5
