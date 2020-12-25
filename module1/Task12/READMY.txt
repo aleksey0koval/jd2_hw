@@ -1,0 +1,151 @@
+Задание 12 Выполните задание 11 для другой локальной папки, сделайте изменения кода в двух папках, 
+произведите операции обновления и фиксирования изменений локальных папок и разрешите возникший конфликт.
+
+Произведем изменения в тексовом файле. Создаем новую ветку newBranch и сразу переходим на нее. 
+Делаем изменение в текстовом файле в ветке newИкфтср и закоментим.
+Переходим на ветку master и изменим текстовый файл, закоментим его.
+Произведем слияние веток, где решим конфликт и сделаем еще один комит.
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   task11.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master)
+$ vin task11.txt
+bash: vin: command not found
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master)
+$ vim task11.txt
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master)
+$ git add .
+warning: LF will be replaced by CRLF in task11.txt.
+The file will have its original line endings in your working directory
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master)
+$ git commit -m "C1"
+[master d9c7f5a] C1
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master)
+$ vim task11.txt
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master)
+$ git add .
+warning: LF will be replaced by CRLF in task11.txt.
+The file will have its original line endings in your working directory
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master)
+$ git commit -m "C2"
+[master df33776] C2
+ 1 file changed, 1 insertion(+)
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master)
+$ git checkout master
+Already on 'master'
+Your branch is ahead of 'origin/master' by 2 commits.
+  (use "git push" to publish your local commits)
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master)
+$ vim task11.txt
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master)
+$ git add .
+warning: LF will be replaced by CRLF in task11.txt.
+The file will have its original line endings in your working directory
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master)
+$ cat task11.txt
+C1
+C2
+C3
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master)
+$ git commit -m "C3"
+[master e157dcb] C3
+ 1 file changed, 1 insertion(+)
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master)
+$ git checkout -b newBranch
+Switched to a new branch 'newBranch'
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (newBranch)
+$ vim task11.txt
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (newBranch)
+$ git add .
+warning: LF will be replaced by CRLF in task11.txt.
+The file will have its original line endings in your working directory
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (newBranch)
+$ git commit -m "C4"
+[newBranch cb67c37] C4
+ 1 file changed, 1 insertion(+)
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (newBranch)
+$ git checkout master
+Switched to branch 'master'
+Your branch is ahead of 'origin/master' by 3 commits.
+  (use "git push" to publish your local commits)
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master)
+$ vim task11.txt
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master)
+$ git add .
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master)
+$ git commit -m "C5"
+[master 1bbe491] C5
+ 1 file changed, 1 insertion(+)
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master)
+$ git merge newBranch
+Auto-merging task11.txt
+CONFLICT (content): Merge conflict in task11.txt
+Automatic merge failed; fix conflicts and then commit the result.
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master|MERGING)
+$ cat task11.txt
+C1
+C2
+C3
+<<<<<<< HEAD
+C5
+=======
+C4
+>>>>>>> newBranch
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master|MERGING)
+$ vim task11.txt
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master|MERGING)
+$ cat task11.txt
+C1
+C2
+C3
+C5
+C4
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master|MERGING)
+$ git add .
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master|MERGING)
+$ git commit -m "C6"
+[master 144be52] C6
+
+user@DESKTOP-OGE1JLF MINGW64 /d/test/Новая папка/test (master)
+$ git status
+On branch master
+Your branch is ahead of 'origin/master' by 6 commits.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+
