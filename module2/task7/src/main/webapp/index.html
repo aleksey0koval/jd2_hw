@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>New receiver form</h1>
+<p>Enter receiver data</p>
+
+<form action="/task7/new-receiver" method="post">
+    <label for="fid">Receiver number:</label><br>
+    <input type="text" id="fid" name="test.idRec" value=""><br>
+    <label for="pname">Receiver name:</label><br>
+    <input type="text" id="pname" name="test.receiverRec" value=""><br>
+    <br>
+    <input type="submit" value="Submit">
+</form>
+</body>
+
+<body>
+
+<h1>New expenses form</h1>
+<p>Enter expenses data</p>
+
+<form action="/task7/new-expenses" method="post">
+    <label for="fidExp">Expenses number:</label><br>
+    <input type="text" id="fidExp" name="test.idExp" value=""><br>
+    <label for="pdate">Expenses date (yyyy-mm-dd):</label><br>
+    <input type="text" id="pdate" name="test.paydate" value=""><br>
+    <label for="freceiver">Receiver name:</label><br>
+    <input type="text" id="freceiver" name="test.receiverExp" value=""><br>
+    <label for="psum">Expenses sum:</label><br>
+    <input type="text" id="psum" name="test.sum" value=""><br>
+    <br>
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>
