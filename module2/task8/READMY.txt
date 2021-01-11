@@ -1,0 +1,16 @@
+Задание 8
+Набрать приведенный пример, откомпилировать его, разместить на сервере (в т.ч.
+зарегистрировать в web.xml) и запустить из браузера.
+
+Для того, чтобы зарегистрировать сервлет и разместить его на сервере необходимо: в файле web.xml (main/webapp/WEB-INF/web.xml) прописать следующее:
+<servlet>
+    <servlet-name>task8</servlet-name>
+    <servlet-class>servlet.Task8</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>task8</servlet-name>
+    <url-pattern>/task8</url-pattern>
+</servlet-mapping>
+В нашем сервлете также необходимо указать:
+@WebServlet(name = "task8")
+В этой ситуации необходимо, чтобы имя в сервлете совпадало с именем в web.xml
