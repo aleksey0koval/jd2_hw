@@ -21,9 +21,6 @@ public class Main {
         } else if (Integer.parseInt(args[2]) < 0) {
             System.out.println("Summa platezha (args[2]) ne mozhet byt` men`she 0");
 
-        } else if (Integer.parseInt(args[1])) {
-            System.out.println();
-
         } else if (Pattern.matches("^((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)$" +
                 "|^(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))|^(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))$" +
                 "|^(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30))$", args[0]) == true
@@ -62,6 +59,13 @@ public class Main {
                 connection.close();
             } catch (SQLException | ClassNotFoundException e) {
                 System.out.println(e);
+            }
+        } else {
+            try {
+                Integer.parseInt(args[1]);
+                Integer.parseInt(args[2]);
+            } catch (NumberFormatException e) {
+                System.out.println("vi vvodite ne chisla");
             }
         }
     }
