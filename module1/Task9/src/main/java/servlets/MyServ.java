@@ -13,6 +13,14 @@ public class MyServ extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final PrintWriter pr = resp.getWriter();
-        pr.println("<h1>Task 9</h1>");
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 10; j++) {
+                pr.print("Hubochka-Bubochka ");
+
+            }
+            pr.println("<p1><big><big><big><big><big><big><big><big><big><big><big><big>" +
+                    "Lukashenko loh </big></big></big></big></big></big></big></big></big></big></big></big></p1>");
+
+        }
     }
 }

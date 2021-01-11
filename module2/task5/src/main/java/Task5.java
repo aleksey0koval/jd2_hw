@@ -72,6 +72,13 @@ public class Task5 {
             } catch (ClassNotFoundException | SQLException e) {
                 e.printStackTrace();
             }
+        } else {
+            try {
+                Integer.parseInt(args[1]);
+                Integer.parseInt(args[2]);
+            } catch (NumberFormatException e) {
+                System.out.println("vi vvodite ne chisla");
+            }
         }
     }
 }
