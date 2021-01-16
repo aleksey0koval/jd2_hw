@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+        <changeSet id="1" author="Kovalchuk">
+            <sql>
+                create database if not exists prod;
+            </sql>
+        </changeSet>
+        <changeSet id="2" author="Kovalchuk">
+            <sql>
+                create table if not exists prod.expenses  (
+                id int not null primary key,
+                paydate date,
+                receiver int not null,
+                sum int
+                );
+            </sql>
+        </changeSet>
+        <changeSet id="3" author="Kovalchuk">
+            <sql>
+                create table if not exists prod.receivers (
+                id bigint not null primary key,
+                receiver varchar(250) not null
+                );
+            </sql>
+        </changeSet>
+
+        <changeSet id="4" author="Kovalchuk">
+            <sql>
+                insert into prod.receivers (id, receiver)
+                values (1, 'Solo');
+                insert into prod.receivers (id, receiver)
+                values (2, 'Korona');
+                insert into prod.receivers (id, receiver)
+                values (3, 'MTS');
+                insert into prod.expenses (id, paydate, receiver, sum)
+                values (1, '2021-01-10', 1, 25);
+                insert into prod.expenses (id, paydate, receiver, sum)
+                values (2, '2021-01-10', 2, 52);
+                insert into prod.expenses (id, paydate, receiver, sum)
+                values (3, '2021-01-11', 3, 20);
+                insert into prod.expenses (id, paydate, receiver, sum)
+                values (4, '2021-01-11', 4, 10);
+            </sql>
+        </changeSet>
+
+</databaseChangeLog>
