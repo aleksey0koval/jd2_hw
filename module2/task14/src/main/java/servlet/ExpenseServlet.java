@@ -1,5 +1,7 @@
 package servlet;
 
+import data.*;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -10,42 +12,66 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
+import java.util.Collections;
+import java.util.List;
 
 @WebServlet(name = "expenseServlet", urlPatterns = "/task14")
 public class ExpenseServlet extends HttpServlet {
+    DaoFactory daoFactory;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        final String databaseName = config.getServletContext().getInitParameter("database.name");
+        try {
+            daoFactory = DaoFactory.getInstance(DatabaseName.valueOf(databaseName));
+        } catch (ClassNotFoundException e) {
+            throw new ServletException(e);
+        }
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            resp.setContentType("text/html; charset=UTF-8");
-            resp.setCharacterEncoding("UTF-8");
-            PrintWriter writer = resp.getWriter();
-            writer.println("<html><head><title>expenseServlet</title></head>");
             ServletContext config = getServletContext();
             String url = config.getInitParameter("database.url");
             String username = config.getInitParameter("database.username");
             String password = config.getInitParameter("database.password");
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    url,
-                    username,
-                    password
-            );
-            final Statement statement = connection.createStatement();
-            final ResultSet resultSet = statement.executeQuery(
-                    "SELECT prod.expenses.id, prod.expenses.paydate, prod.receivers.receiver, prod.expenses.sum FROM prod.expenses, prod.receivers\n" +
-                            "where prod.expenses.receiver = prod.receivers.id");
-            while (resultSet.next()) {
-                int id = resultSet.getInt(1);
-                Date date = resultSet.getDate(2);
-                String name = resultSet.getString(3);
-                int sum = resultSet.getInt(4);
-                writer.println("<body><h1>" + id + " " + date + " " + name + " " + sum + "</h1>");
+            ExpenseDao expenseDao = daoFactory.getExpenseDao(url, username, password);
+
+            final List<Expense> expenses;
+
+            String id = req.getParameter("id");
+            if (id == null) {
+                expenses = expenseDao.readAll();
+            } else {
+                Expense expense = null;
+                try {
+                    expense = expenseDao.read(Integer.parseInt(id));
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                expenses = expense != null ? List.of(expense) : Collections.emptyList();
             }
+
+            resp.setContentType("text/html; charset=UTF-8");
+            resp.setCharacterEncoding("UTF-8");
+            PrintWriter writer = resp.getWriter();
+            writer.println("<html><head><title>expenseServlet</title></head>");
+
+            for (Expense expense : expenses) {
+                System.out.println("id = " + expense.getId() +
+                        ", date " + expense.getDate() +
+                        ", receiver: " + expense.getReceiver() +
+                        ", sum = " + expense.getSum());
+                writer.println("<body><h3>id = " + expense.getId() +
+                        ", date " + expense.getDate() +
+                        ", receiver: " + expense.getReceiver() +
+                        ", sum = " + expense.getSum() + "</h3>");
+            }
+
             writer.println("</body></html>");
-            resultSet.close();
-            statement.close();
-            connection.close();
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

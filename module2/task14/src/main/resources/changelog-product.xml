@@ -11,7 +11,7 @@
         </changeSet>
         <changeSet id="2" author="Kovalchuk">
             <sql>
-                create table if not exists prod.expenses (
+                create table if not exists prod.expenses  (
                 id int not null primary key,
                 paydate date,
                 receiver int not null,
@@ -43,7 +43,7 @@
                 insert into prod.expenses (id, paydate, receiver, sum)
                 values (3, '2021-01-11', 3, 20);
                 insert into prod.expenses (id, paydate, receiver, sum)
-                values (4, '2021-01-11', 2, 10);
+                values (4, '2021-01-11', 4, 10);
             </sql>
         </changeSet>
 
