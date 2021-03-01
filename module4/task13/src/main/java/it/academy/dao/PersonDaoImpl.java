@@ -29,7 +29,7 @@ public class PersonDaoImpl implements PersonDao {
 
     @Override
     public void save(Person person) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         Transaction transaction = session.beginTransaction();
         String id = (String) session.save(person);
         transaction.commit();
