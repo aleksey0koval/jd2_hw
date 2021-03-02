@@ -18,6 +18,7 @@ public class PersonService {
         return personDao.findAllPersons();
     }
 
+    @Transactional
     public void savePerson(Person person) {
        personDao.save(person);
     }
